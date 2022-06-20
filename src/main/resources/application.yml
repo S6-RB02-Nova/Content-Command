@@ -1,0 +1,19 @@
+spring:
+    application:
+        name: commandapi
+    rabbitmq:
+        addresses: rabbitmq-clusterip-srv:5672
+        username: guest
+        password: guest
+
+frontend:
+    url: http://localhost:3000
+
+queue:
+    name: q.content.create
+
+exchange:
+    name: x.content
+
+server:
+    port: 8083
