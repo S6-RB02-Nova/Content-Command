@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: commandapi
+spec:
+    selector:
+        matchLabels:
+            app: commandapi
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                app: commandapi
+        spec:
+            containers:
+                -   name: commandapi
+                    image: command:1.0
+                    imagePullPolicy: Never
+                    resources:
+                        requests:
+                            memory: "192Mi"
+                            cpu: "500m"
+                        limits:
+                            memory: "256Mi"
+                            cpu: "1000m"
+                    ports:
+                        -   containerPort: 8083
+                    env:
+                        -   name: server.port
+                            value: "8083"
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: commandapi
+    labels:
+        app: commandapi
+spec:
+    ports:
+        -   protocol: TCP
+            port: 8083
+            targetPort: 8083
+    selector:
+        app: commandapi
+    type: ClusterIP
